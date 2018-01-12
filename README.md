@@ -2,6 +2,7 @@
 
   This is a library written for the Panasonic Grid-EYE AMG88
   SparkFun sells these at its website: www.sparkfun.com
+  
   Do you like this library? Help support SparkFun. Buy a board!
   https://www.sparkfun.com/products/14568
 
