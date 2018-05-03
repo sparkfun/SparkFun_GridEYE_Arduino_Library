@@ -10,7 +10,6 @@ SparkFun_GridEYE_Arduino_Library
   
   Do you like this library? Help support SparkFun. Buy a board!
   * [SEN-14607](https://www.sparkfun.com/products/14607)
-26
   * [SPX-14568](https://www.sparkfun.com/products/14568)
 
   Written by Nick Poole @ SparkFun Electronics, January 11th, 2018
@@ -34,7 +33,6 @@ Products that use this Library
 ---------------------------------
 
 * [SEN-14607](https://www.sparkfun.com/products/14607)- SparkFun breakout board for Grid-EYE AMG8833
-26
 * [SPX-14568](https://www.sparkfun.com/products/14568)- SparkX breakout board for Grid-EYE AMG8833
 
 License Information
