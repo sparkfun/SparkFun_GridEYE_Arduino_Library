@@ -33,8 +33,8 @@ Documentation
 --------------
 
 * **[Installing an Arduino Library Guide](https://learn.sparkfun.com/tutorials/installing-an-arduino-library)** - Basic information on how to install an Arduino library.
-* **[Product Repository](https://learn.sparkfun.com/tutorials/qwiic-grid-eye-infrared-array-amg88xx-hookup-guide)** - Main repository (including hardware files) for the GridEye.
-* **[Hookup Guide](https://learn.sparkfun.com/tutorials/qwiic-grid-eye-infrared-array-hookup-guide)** - Basic hookup guide for the Qwiic GRID-Eye Infrared Array.
+* **[Product Repository](https://github.com/sparkfun/Qwiic_GRIDEye)** - Main repository (including hardware files) for the GridEye.
+* **[Hookup Guide](https://learn.sparkfun.com/tutorials/qwiic-grid-eye-infrared-array-amg88xx-hookup-guide)** - Basic hookup guide for the Qwiic GRID-Eye Infrared Array.
 
 Products that use this Library 
 ---------------------------------
