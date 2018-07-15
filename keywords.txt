@@ -6,80 +6,80 @@
 # Datatypes (KEYWORD1)
 #######################################
 
-GridEYE								KEYWORD1
+GridEYE	KEYWORD1
 
 #######################################
 # Methods and Functions (KEYWORD2)
 #######################################
 
-begin								KEYWORD2
+begin	KEYWORD2
 
-getPixelTemperature					KEYWORD2
-getPixelTemperatureRaw				KEYWORD2
-getPixelTemperatureFahrenheit		KEYWORD2
+getPixelTemperature	KEYWORD2
+getPixelTemperatureRaw	KEYWORD2
+getPixelTemperatureFahrenheit	KEYWORD2
 
-getDeviceTemperature				KEYWORD2
-getDeviceTemperatureRaw				KEYWORD2
-getDeviceTemperatureFahrenheit		KEYWORD2
+getDeviceTemperature	KEYWORD2
+getDeviceTemperatureRaw	KEYWORD2
+getDeviceTemperatureFahrenheit	KEYWORD2
 
-setFramerate1FPS					KEYWORD2
-setFramerate10FPS					KEYWORD2
-isFramerate10FPS					KEYWORD2
+setFramerate1FPS	KEYWORD2
+setFramerate10FPS	KEYWORD2
+isFramerate10FPS	KEYWORD2
 
-wake								KEYWORD2
-sleep								KEYWORD2
-standby60seconds					KEYWORD2
-standby10seconds					KEYWORD2
+wake	KEYWORD2
+sleep	KEYWORD2
+standby60seconds	KEYWORD2
+standby10seconds	KEYWORD2
 
-interruptPinEnable					KEYWORD2
-interruptPinDisable					KEYWORD2
-setInterruptModeAbsolute			KEYWORD2
-setInterruptModeDifference			KEYWORD2
-interruptPinEnabled					KEYWORD2
+interruptPinEnable	KEYWORD2
+interruptPinDisable	KEYWORD2
+setInterruptModeAbsolute	KEYWORD2
+setInterruptModeDifference	KEYWORD2
+interruptPinEnabled	KEYWORD2
 
-interruptFlagSet					KEYWORD2
-pixelTemperatureOutputOK			KEYWORD2
-deviceTemperatureOutputOK			KEYWORD2
-clearInterruptFlag					KEYWORD2
-clearPixelTemperatureOverflow		KEYWORD2
-clearDeviceTemperatureOverflow		KEYWORD2
-clearAllOverflow					KEYWORD2
-clearAllStatusFlags					KEYWORD2
+interruptFlagSet	KEYWORD2
+pixelTemperatureOutputOK	KEYWORD2
+deviceTemperatureOutputOK	KEYWORD2
+clearInterruptFlag	KEYWORD2
+clearPixelTemperatureOverflow	KEYWORD2
+clearDeviceTemperatureOverflow	KEYWORD2
+clearAllOverflow	KEYWORD2
+clearAllStatusFlags	KEYWORD2
 
-pixelInterruptSet					KEYWORD2
+pixelInterruptSet	KEYWORD2
 
-movingAverageEnable					KEYWORD2
-movingAverageDisable				KEYWORD2
-movingAverageEnabled				KEYWORD2
+movingAverageEnable	KEYWORD2
+movingAverageDisable	KEYWORD2
+movingAverageEnabled	KEYWORD2
 
-setUpperInterruptValue				KEYWORD2
-setUpperInterruptValueRaw			KEYWORD2
+setUpperInterruptValue	KEYWORD2
+setUpperInterruptValueRaw	KEYWORD2
 setUpperInterruptValueFahrenheit	KEYWORD2
 
-setLowerInterruptValue				KEYWORD2
-setLowerInterruptValueRaw			KEYWORD2
+setLowerInterruptValue	KEYWORD2
+setLowerInterruptValueRaw	KEYWORD2
 setLowerInterruptValueFahrenheit	KEYWORD2
 
-setInterruptHysteresis				KEYWORD2
-setInterruptHysteresisRaw			KEYWORD2
+setInterruptHysteresis	KEYWORD2
+setInterruptHysteresisRaw	KEYWORD2
 setInterruptHysteresisFahrenheit	KEYWORD2
 
-getUpperInterruptValue				KEYWORD2
-getUpperInterruptValueRaw			KEYWORD2
+getUpperInterruptValue	KEYWORD2
+getUpperInterruptValueRaw	KEYWORD2
 getUpperInterruptValueFahrenheit	KEYWORD2
 
-getLowerInterruptValue				KEYWORD2
-getLowerInterruptValueRaw			KEYWORD2
+getLowerInterruptValue	KEYWORD2
+getLowerInterruptValueRaw	KEYWORD2
 getLowerInterruptValueFahrenheit	KEYWORD2
 
-getInterruptHysteresis				KEYWORD2
-getInterruptHysteresisRaw			KEYWORD2
+getInterruptHysteresis	KEYWORD2
+getInterruptHysteresisRaw	KEYWORD2
 getInterruptHysteresisFahrenheit	KEYWORD2
 
-setRegister							KEYWORD2
-getRegister							KEYWORD2
+setRegister	KEYWORD2
+getRegister	KEYWORD2
 
-setI2CAddress						KEYWORD2
+setI2CAddress	KEYWORD2
 
 #######################################
 # Constants (LITERAL1)
