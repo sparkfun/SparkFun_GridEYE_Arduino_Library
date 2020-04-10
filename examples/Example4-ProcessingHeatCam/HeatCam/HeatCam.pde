@@ -71,7 +71,10 @@ void draw() {
   // read everything up to the first linefeed
   if(myPort.available() > 64){
   myString = myPort.readStringUntil(13);
-  
+  if(myString==null){
+    print("\nSerial read returned null \n");
+    return;
+  }
   // generate an array of strings that contains each of the comma
   // separated values
   String splitString[] = splitTokens(myString, ",");
