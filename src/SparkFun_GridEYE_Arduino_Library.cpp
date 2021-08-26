@@ -875,11 +875,17 @@ int16_t GridEYE::getRegister(unsigned char reg, int8_t len)
   {
     // Get bytes from sensor
     uint8_t lsb = _i2cPort->read();
+    if (len > 1)
+    {
+      uint8_t msb = _i2cPort->read();
 
-    uint8_t msb = _i2cPort->read();
-
-    // concat bytes into int
-    result = (uint16_t)msb << 8 | lsb;
+      // concat bytes into int
+      result = (uint16_t)msb << 8 | lsb;
+    }
+    else
+    {
+      result = lsb;
+    }
   }
 
   _i2cPort->endTransmission();
