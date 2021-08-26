@@ -70,8 +70,12 @@ float GridEYE::getPixelTemperature(unsigned char pixelAddr)
   {
     // if temperature is negative, mask out the sign byte and
     // make the float negative
-    temperature &= ~(1 << 11);
+    temperature &= 0x07FF;
     temperature = temperature * -1;
+  }
+  else
+  {
+    temperature &= 0x07FF;
   }
 
   float DegreesC = temperature * 0.25;
@@ -92,8 +96,12 @@ float GridEYE::getPixelTemperatureFahrenheit(unsigned char pixelAddr)
   {
     // if temperature is negative, mask out the sign byte and
     // make the float negative
-    temperature &= ~(1 << 11);
+    temperature &= 0x07FF;
     temperature = temperature * -1;
+  }
+  else
+  {
+    temperature &= 0x07FF;
   }
 
   float DegreesF = (temperature * 0.25) * 1.8 + 32;
@@ -135,8 +143,12 @@ float GridEYE::getDeviceTemperature()
   {
     // if temperature is negative, mask out the sign byte and
     // make the float negative
-    temperature &= ~(1 << 11);
+    temperature &= 0x07FF;
     temperature = temperature * -1;
+  }
+  else
+  {
+    temperature &= 0x07FF;
   }
 
   float realTemperature = temperature * 0.0625;
@@ -154,8 +166,12 @@ float GridEYE::getDeviceTemperatureFahrenheit()
   {
     // if temperature is negative, mask out the sign byte and
     // make the float negative
-    temperature &= ~(1 << 11);
+    temperature &= 0x07FF;
     temperature = temperature * -1;
+  }
+  else
+  {
+    temperature &= 0x07FF;
   }
 
   float realTemperatureF = (temperature * 0.0625) * 1.8 + 32;
@@ -719,8 +735,12 @@ float GridEYE::getUpperInterruptValue()
   {
     // if temperature is negative, mask out the sign byte and
     // make the float negative
-    temperature &= ~(1 << 11);
+    temperature &= 0x07FF;
     temperature = temperature * -1;
+  }
+  else
+  {
+    temperature &= 0x07FF;
   }
 
   float DegreesC = temperature * 0.25;
@@ -745,8 +765,12 @@ float GridEYE::getUpperInterruptValueFahrenheit()
   {
     // if temperature is negative, mask out the sign byte and
     // make the float negative
-    temperature &= ~(1 << 11);
+    temperature &= 0x07FF;
     temperature = temperature * -1;
+  }
+  else
+  {
+    temperature &= 0x07FF;
   }
 
   float DegreesF = (temperature * 0.25) * 1.8 + 32;
@@ -765,8 +789,12 @@ float GridEYE::getLowerInterruptValue()
   {
     // if temperature is negative, mask out the sign byte and
     // make the float negative
-    temperature &= ~(1 << 11);
+    temperature &= 0x07FF;
     temperature = temperature * -1;
+  }
+  else
+  {
+    temperature &= 0x07FF;
   }
 
   float DegreesC = temperature * 0.25;
@@ -785,8 +813,12 @@ float GridEYE::getLowerInterruptValueFahrenheit()
   {
     // if temperature is negative, mask out the sign byte and
     // make the float negative
-    temperature &= ~(1 << 11);
+    temperature &= 0x07FF;
     temperature = temperature * -1;
+  }
+  else
+  {
+    temperature &= 0x07FF;
   }
 
   float DegreesF = (temperature * 0.25) * 1.8 + 32;
@@ -811,8 +843,12 @@ float GridEYE::getInterruptHysteresis()
   {
     // if temperature is negative, mask out the sign byte and
     // make the float negative
-    temperature &= ~(1 << 11);
+    temperature &= 0x07FF;
     temperature = temperature * -1;
+  }
+  else
+  {
+    temperature &= 0x07FF;
   }
 
   float DegreesC = temperature * 0.25;
@@ -830,8 +866,12 @@ float GridEYE::getInterruptHysteresisFahrenheit()
   {
     // if temperature is negative, mask out the sign byte and
     // make the float negative
-    temperature &= ~(1 << 11);
+    temperature &= 0x07FF;
     temperature = temperature * -1;
+  }
+  else
+  {
+    temperature &= 0x07FF;
   }
 
   float DegreesF = (temperature * 0.25) * 1.8 + 32;
