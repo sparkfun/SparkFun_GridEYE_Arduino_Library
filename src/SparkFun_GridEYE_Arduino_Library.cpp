@@ -59,7 +59,6 @@ void GridEYE::setI2CAddress(uint8_t addr)
 
 float GridEYE::getPixelTemperature(unsigned char pixelAddr)
 {
-
   // Temperature registers are numbered 128-255
   // Each pixel has a lower and higher register
   unsigned char pixelLowRegister = TEMPERATURE_REGISTER_START + (2 * pixelAddr);
@@ -67,9 +66,9 @@ float GridEYE::getPixelTemperature(unsigned char pixelAddr)
 
   // temperature is reported as 12-bit twos complement
   // check if temperature is negative
-  if(temperature & (1 << 11))
+  if (temperature & (1 << 11))
   {
-    // if temperature is negative, mask out the sign byte and 
+    // if temperature is negative, mask out the sign byte and
     // make the float negative
     temperature &= ~(1 << 11);
     temperature = temperature * -1;
@@ -78,12 +77,10 @@ float GridEYE::getPixelTemperature(unsigned char pixelAddr)
   float DegreesC = temperature * 0.25;
 
   return DegreesC;
-
 }
 
 float GridEYE::getPixelTemperatureFahrenheit(unsigned char pixelAddr)
 {
-
   // Temperature registers are numbered 128-255
   // Each pixel has a lower and higher register
   unsigned char pixelLowRegister = TEMPERATURE_REGISTER_START + (2 * pixelAddr);
@@ -91,9 +88,9 @@ float GridEYE::getPixelTemperatureFahrenheit(unsigned char pixelAddr)
 
   // temperature is reported as 12-bit twos complement
   // check if temperature is negative
-  if(temperature & (1 << 11))
+  if (temperature & (1 << 11))
   {
-    // if temperature is negative, mask out the sign byte and 
+    // if temperature is negative, mask out the sign byte and
     // make the float negative
     temperature &= ~(1 << 11);
     temperature = temperature * -1;
@@ -102,19 +99,16 @@ float GridEYE::getPixelTemperatureFahrenheit(unsigned char pixelAddr)
   float DegreesF = (temperature * 0.25) * 1.8 + 32;
 
   return DegreesF;
-
 }
 
 int16_t GridEYE::getPixelTemperatureRaw(unsigned char pixelAddr)
 {
-
   // Temperature registers are numbered 128-255
   // Each pixel has a lower and higher register
   unsigned char pixelLowRegister = TEMPERATURE_REGISTER_START + (2 * pixelAddr);
   int16_t temperature = getRegister(pixelLowRegister, 2);
 
   return temperature;
-
 }
 
 /********************************************************
@@ -133,14 +127,13 @@ int16_t GridEYE::getPixelTemperatureRaw(unsigned char pixelAddr)
 
 float GridEYE::getDeviceTemperature()
 {
-
   int16_t temperature = getRegister(THERMISTOR_REGISTER_LSB, 2);
 
-    // temperature is reported as 12-bit twos complement
-    // check if temperature is negative
-  if(temperature & (1 << 11))
+  // temperature is reported as 12-bit twos complement
+  // check if temperature is negative
+  if (temperature & (1 << 11))
   {
-    // if temperature is negative, mask out the sign byte and 
+    // if temperature is negative, mask out the sign byte and
     // make the float negative
     temperature &= ~(1 << 11);
     temperature = temperature * -1;
@@ -149,19 +142,17 @@ float GridEYE::getDeviceTemperature()
   float realTemperature = temperature * 0.0625;
 
   return realTemperature;
-
 }
 
 float GridEYE::getDeviceTemperatureFahrenheit()
 {
-
   int16_t temperature = getRegister(THERMISTOR_REGISTER_LSB, 2);
 
-    // temperature is reported as 12-bit twos complement
-    // check if temperature is negative
-  if(temperature & (1 << 11))
+  // temperature is reported as 12-bit twos complement
+  // check if temperature is negative
+  if (temperature & (1 << 11))
   {
-    // if temperature is negative, mask out the sign byte and 
+    // if temperature is negative, mask out the sign byte and
     // make the float negative
     temperature &= ~(1 << 11);
     temperature = temperature * -1;
@@ -170,16 +161,13 @@ float GridEYE::getDeviceTemperatureFahrenheit()
   float realTemperatureF = (temperature * 0.0625) * 1.8 + 32;
 
   return realTemperatureF;
-
 }
 
 int16_t GridEYE::getDeviceTemperatureRaw()
 {
-
   int16_t temperature = getRegister(THERMISTOR_REGISTER_LSB, 2);
 
   return temperature;
-
 }
 
 /********************************************************
@@ -201,23 +189,24 @@ int16_t GridEYE::getDeviceTemperatureRaw()
 
 void GridEYE::setFramerate1FPS()
 {
-    setRegister(FRAMERATE_REGISTER, 1);  
+  setRegister(FRAMERATE_REGISTER, 1);
 }
 
 void GridEYE::setFramerate10FPS()
 {
-    setRegister(FRAMERATE_REGISTER, 0);  
+  setRegister(FRAMERATE_REGISTER, 0);
 }
 
 bool GridEYE::isFramerate10FPS()
 {
-
-    if(getRegister(FRAMERATE_REGISTER, 1) == 0){
-      return true;
-    }else{
-      return false;
-    }
-  
+  if (getRegister(FRAMERATE_REGISTER, 1) == 0)
+  {
+    return true;
+  }
+  else
+  {
+    return false;
+  }
 }
 
 /********************************************************
@@ -242,28 +231,24 @@ bool GridEYE::isFramerate10FPS()
  *    
  ********************************************************/
 
-void GridEYE::wake(){
-
-    setRegister(POWER_CONTROL_REGISTER, 0x00);
-  
+void GridEYE::wake()
+{
+  setRegister(POWER_CONTROL_REGISTER, 0x00);
 }
 
-void GridEYE::sleep(){
-
-    setRegister(POWER_CONTROL_REGISTER, 0x10);
-  
+void GridEYE::sleep()
+{
+  setRegister(POWER_CONTROL_REGISTER, 0x10);
 }
 
-void GridEYE::standby60seconds(){
-
-    setRegister(POWER_CONTROL_REGISTER, 0x20);
-  
+void GridEYE::standby60seconds()
+{
+  setRegister(POWER_CONTROL_REGISTER, 0x20);
 }
 
-void GridEYE::standby10seconds(){
-
-    setRegister(POWER_CONTROL_REGISTER, 0x21);
-  
+void GridEYE::standby10seconds()
+{
+  setRegister(POWER_CONTROL_REGISTER, 0x21);
 }
 
 /********************************************************
@@ -286,55 +271,53 @@ void GridEYE::standby10seconds(){
  * 
  ********************************************************/
 
-void GridEYE::interruptPinEnable(){
-
-    int16_t ICRValue = getRegister(INT_CONTROL_REGISTER, 1);
-    
-    ICRValue |= (1 << 0);
-    
-    setRegister(INT_CONTROL_REGISTER, ICRValue & 0xFF);   
-  
-}
-
-void GridEYE::interruptPinDisable(){
-
-    int16_t ICRValue = getRegister(INT_CONTROL_REGISTER, 1);
-    
-    ICRValue &= ~(1 << 0);
-    
-    setRegister(INT_CONTROL_REGISTER, ICRValue & 0xFF);
-  
-}
-
-void GridEYE::setInterruptModeAbsolute(){
-
-    int16_t ICRValue = getRegister(INT_CONTROL_REGISTER, 1);
-    
-    ICRValue |= (1 << 1);
-    
-    setRegister(INT_CONTROL_REGISTER, ICRValue & 0xFF);
-   
-}
-
-void GridEYE::setInterruptModeDifference(){
-
-    int16_t ICRValue = getRegister(INT_CONTROL_REGISTER, 1);
-    
-    ICRValue &= ~(1 << 1);
-    
-    setRegister(INT_CONTROL_REGISTER, ICRValue & 0xFF);    
-  
-}
-
-bool GridEYE::interruptPinEnabled(){
-
+void GridEYE::interruptPinEnable()
+{
   int16_t ICRValue = getRegister(INT_CONTROL_REGISTER, 1);
-  if(ICRValue & (1 << 0)){
+
+  ICRValue |= (1 << 0);
+
+  setRegister(INT_CONTROL_REGISTER, ICRValue & 0xFF);
+}
+
+void GridEYE::interruptPinDisable()
+{
+  int16_t ICRValue = getRegister(INT_CONTROL_REGISTER, 1);
+
+  ICRValue &= ~(1 << 0);
+
+  setRegister(INT_CONTROL_REGISTER, ICRValue & 0xFF);
+}
+
+void GridEYE::setInterruptModeAbsolute()
+{
+  int16_t ICRValue = getRegister(INT_CONTROL_REGISTER, 1);
+
+  ICRValue |= (1 << 1);
+
+  setRegister(INT_CONTROL_REGISTER, ICRValue & 0xFF);
+}
+
+void GridEYE::setInterruptModeDifference()
+{
+  int16_t ICRValue = getRegister(INT_CONTROL_REGISTER, 1);
+
+  ICRValue &= ~(1 << 1);
+
+  setRegister(INT_CONTROL_REGISTER, ICRValue & 0xFF);
+}
+
+bool GridEYE::interruptPinEnabled()
+{
+  int16_t ICRValue = getRegister(INT_CONTROL_REGISTER, 1);
+  if (ICRValue & (1 << 0))
+  {
     return true;
-  }else{
+  }
+  else
+  {
     return false;
   }
-  
 }
 
 /********************************************************
@@ -368,67 +351,68 @@ bool GridEYE::interruptPinEnabled(){
  * 
  ********************************************************/
 
-bool GridEYE::interruptFlagSet(){
-
+bool GridEYE::interruptFlagSet()
+{
   int16_t StatRegValue = getRegister(STATUS_REGISTER, 1);
-  if(StatRegValue & (1 << 1)){
+  if (StatRegValue & (1 << 1))
+  {
     return true;
-  }else{
+  }
+  else
+  {
     return false;
-  }  
-  
+  }
 }
 
-bool GridEYE::pixelTemperatureOutputOK(){
-
+bool GridEYE::pixelTemperatureOutputOK()
+{
   int16_t StatRegValue = getRegister(STATUS_REGISTER, 1);
-  if(StatRegValue & (1 << 2)){
+  if (StatRegValue & (1 << 2))
+  {
     return false;
-  }else{
+  }
+  else
+  {
     return true;
-  }  
-  
+  }
 }
 
-bool GridEYE::deviceTemperatureOutputOK(){
-
+bool GridEYE::deviceTemperatureOutputOK()
+{
   int16_t StatRegValue = getRegister(STATUS_REGISTER, 1);
-  if(StatRegValue & (1 << 3)){
+  if (StatRegValue & (1 << 3))
+  {
     return false;
-  }else{
+  }
+  else
+  {
     return true;
-  }  
-  
+  }
 }
 
-void GridEYE::clearInterruptFlag(){
-    
-    setRegister(STATUS_CLEAR_REGISTER, 0x02); 
-  
+void GridEYE::clearInterruptFlag()
+{
+  setRegister(STATUS_CLEAR_REGISTER, 0x02);
 }
 
-void GridEYE::clearPixelTemperatureOverflow(){
-    
-    setRegister(STATUS_CLEAR_REGISTER, 0x04); 
-  
+void GridEYE::clearPixelTemperatureOverflow()
+{
+  setRegister(STATUS_CLEAR_REGISTER, 0x04);
 }
 
-void GridEYE::clearDeviceTemperatureOverflow(){
-    
-    setRegister(STATUS_CLEAR_REGISTER, 0x08); 
-  
+void GridEYE::clearDeviceTemperatureOverflow()
+{
+  setRegister(STATUS_CLEAR_REGISTER, 0x08);
 }
 
-void GridEYE::clearAllOverflow(){
-
-    setRegister(STATUS_CLEAR_REGISTER, 0x0C); 
-  
+void GridEYE::clearAllOverflow()
+{
+  setRegister(STATUS_CLEAR_REGISTER, 0x0C);
 }
 
-void GridEYE::clearAllStatusFlags(){
-
-    setRegister(STATUS_CLEAR_REGISTER, 0x0E); 
-  
+void GridEYE::clearAllStatusFlags()
+{
+  setRegister(STATUS_CLEAR_REGISTER, 0x0E);
 }
 
 /********************************************************
@@ -440,19 +424,21 @@ void GridEYE::clearAllStatusFlags(){
  * 
  ********************************************************/
 
-bool GridEYE::pixelInterruptSet(uint8_t pixelAddr){
-
+bool GridEYE::pixelInterruptSet(uint8_t pixelAddr)
+{
   unsigned char interruptTableRegister = INT_TABLE_REGISTER_INT0 + (pixelAddr / 8);
   uint8_t pixelPosition = (pixelAddr % 8);
 
   int16_t interruptTableRow = getRegister(interruptTableRegister, 1);
 
-  if(interruptTableRow & (1 << pixelPosition)){
+  if (interruptTableRow & (1 << pixelPosition))
+  {
     return true;
-  }else{
+  }
+  else
+  {
     return false;
-  }    
-
+  }
 }
 
 /********************************************************
@@ -473,35 +459,35 @@ bool GridEYE::pixelInterruptSet(uint8_t pixelAddr){
  * 
  ********************************************************/
 
-void GridEYE::movingAverageEnable(){
-
-    setRegister(RESERVED_AVERAGE_REGISTER, 0x50); 
-    setRegister(RESERVED_AVERAGE_REGISTER, 0x45); 
-    setRegister(RESERVED_AVERAGE_REGISTER, 0x57); 
-    setRegister(AVERAGE_REGISTER, 0x20); 
-    setRegister(RESERVED_AVERAGE_REGISTER, 0x00); 
-  
+void GridEYE::movingAverageEnable()
+{
+  setRegister(RESERVED_AVERAGE_REGISTER, 0x50);
+  setRegister(RESERVED_AVERAGE_REGISTER, 0x45);
+  setRegister(RESERVED_AVERAGE_REGISTER, 0x57);
+  setRegister(AVERAGE_REGISTER, 0x20);
+  setRegister(RESERVED_AVERAGE_REGISTER, 0x00);
 }
 
-void GridEYE::movingAverageDisable(){
-
-    setRegister(RESERVED_AVERAGE_REGISTER, 0x50); 
-    setRegister(RESERVED_AVERAGE_REGISTER, 0x45); 
-    setRegister(RESERVED_AVERAGE_REGISTER, 0x57); 
-    setRegister(AVERAGE_REGISTER, 0x00); 
-    setRegister(RESERVED_AVERAGE_REGISTER, 0x00); 
-  
+void GridEYE::movingAverageDisable()
+{
+  setRegister(RESERVED_AVERAGE_REGISTER, 0x50);
+  setRegister(RESERVED_AVERAGE_REGISTER, 0x45);
+  setRegister(RESERVED_AVERAGE_REGISTER, 0x57);
+  setRegister(AVERAGE_REGISTER, 0x00);
+  setRegister(RESERVED_AVERAGE_REGISTER, 0x00);
 }
 
-bool GridEYE::movingAverageEnabled(){
-
+bool GridEYE::movingAverageEnabled()
+{
   int16_t AVGRegValue = getRegister(AVERAGE_REGISTER, 1);
-  if(AVGRegValue & (1 << 5)){
+  if (AVGRegValue & (1 << 5))
+  {
     return true;
-  }else{
+  }
+  else
+  {
     return false;
-  }  
-  
+  }
 }
 
 /********************************************************
@@ -558,163 +544,168 @@ bool GridEYE::movingAverageEnabled(){
  * 
  ********************************************************/
 
-void GridEYE::setUpperInterruptValue(float DegreesC){
-
+void GridEYE::setUpperInterruptValue(float DegreesC)
+{
   bool isNegative = false;
 
-  if(DegreesC < 0){
+  if (DegreesC < 0)
+  {
     DegreesC = abs(DegreesC);
     isNegative = true;
   }
-  
-  int16_t temperature = 0;  
-  temperature = round(DegreesC*4);
 
-  if(isNegative){
+  int16_t temperature = 0;
+  temperature = round(DegreesC * 4);
+
+  if (isNegative)
+  {
     temperature = 0 - temperature;
     temperature |= (1 << 11);
   }
-  
+
   setRegister(INT_LEVEL_REGISTER_UPPER_LSB, temperature & 0xFF);
   setRegister(INT_LEVEL_REGISTER_UPPER_MSB, temperature >> 8);
-  
 }
 
-void GridEYE::setUpperInterruptValueRaw(int16_t regValue){
-  
+void GridEYE::setUpperInterruptValueRaw(int16_t regValue)
+{
   setRegister(INT_LEVEL_REGISTER_UPPER_LSB, regValue & 0xFF);
   setRegister(INT_LEVEL_REGISTER_UPPER_MSB, regValue >> 8);
-  
 }
 
-void GridEYE::setUpperInterruptValueFahrenheit(float DegreesF){
-
+void GridEYE::setUpperInterruptValueFahrenheit(float DegreesF)
+{
   bool isNegative = false;
 
   float DegreesC = (DegreesF - 32) / 1.8;
 
-  if(DegreesC < 0){
+  if (DegreesC < 0)
+  {
     DegreesC = abs(DegreesC);
     isNegative = true;
   }
-  
-  int16_t temperature = 0;  
-  temperature = round(DegreesC*4);
 
-  if(isNegative){
+  int16_t temperature = 0;
+  temperature = round(DegreesC * 4);
+
+  if (isNegative)
+  {
     temperature = 0 - temperature;
     temperature |= (1 << 11);
   }
-  
+
   setRegister(INT_LEVEL_REGISTER_UPPER_LSB, temperature & 0xFF);
   setRegister(INT_LEVEL_REGISTER_UPPER_MSB, temperature >> 8);
-  
 }
 
-void GridEYE::setLowerInterruptValue(float DegreesC){
-
+void GridEYE::setLowerInterruptValue(float DegreesC)
+{
   bool isNegative = false;
 
-  if(DegreesC < 0){
+  if (DegreesC < 0)
+  {
     DegreesC = abs(DegreesC);
     isNegative = true;
   }
-  
-  int16_t temperature = 0;  
-  temperature = round(DegreesC*4);
 
-  if(isNegative){
+  int16_t temperature = 0;
+  temperature = round(DegreesC * 4);
+
+  if (isNegative)
+  {
     temperature = 0 - temperature;
     temperature |= (1 << 11);
   }
-  
+
   setRegister(INT_LEVEL_REGISTER_LOWER_LSB, temperature & 0xFF);
   setRegister(INT_LEVEL_REGISTER_LOWER_MSB, temperature >> 8);
-  
 }
 
-void GridEYE::setLowerInterruptValueRaw(int16_t regValue){
-
+void GridEYE::setLowerInterruptValueRaw(int16_t regValue)
+{
   setRegister(INT_LEVEL_REGISTER_LOWER_LSB, regValue & 0xFF);
   setRegister(INT_LEVEL_REGISTER_LOWER_MSB, regValue >> 8);
-  
 }
 
-void GridEYE::setLowerInterruptValueFahrenheit(float DegreesF){
-
+void GridEYE::setLowerInterruptValueFahrenheit(float DegreesF)
+{
   bool isNegative = false;
 
   float DegreesC = (DegreesF - 32) / 1.8;
 
-  if(DegreesC < 0){
+  if (DegreesC < 0)
+  {
     DegreesC = abs(DegreesC);
     isNegative = true;
   }
-  
-  int16_t temperature = 0;  
-  temperature = round(DegreesC*4);
 
-  if(isNegative){
+  int16_t temperature = 0;
+  temperature = round(DegreesC * 4);
+
+  if (isNegative)
+  {
     temperature = 0 - temperature;
     temperature |= (1 << 11);
   }
-  
+
   setRegister(INT_LEVEL_REGISTER_LOWER_LSB, temperature & 0xFF);
   setRegister(INT_LEVEL_REGISTER_LOWER_MSB, temperature >> 8);
-  
 }
 
-void GridEYE::setInterruptHysteresis(float DegreesC){
-
+void GridEYE::setInterruptHysteresis(float DegreesC)
+{
   bool isNegative = false;
 
-  if(DegreesC < 0){
+  if (DegreesC < 0)
+  {
     DegreesC = abs(DegreesC);
     isNegative = true;
   }
-  
-  int16_t temperature = 0;  
-  temperature = round(DegreesC*4);
 
-  if(isNegative){
+  int16_t temperature = 0;
+  temperature = round(DegreesC * 4);
+
+  if (isNegative)
+  {
     temperature = 0 - temperature;
     temperature |= (1 << 11);
   }
-  
+
   setRegister(INT_LEVEL_REGISTER_HYST_LSB, temperature & 0xFF);
   setRegister(INT_LEVEL_REGISTER_HYST_MSB, temperature >> 8);
-  
 }
 
-void GridEYE::setInterruptHysteresisRaw(int16_t regValue){
-  
+void GridEYE::setInterruptHysteresisRaw(int16_t regValue)
+{
+
   setRegister(INT_LEVEL_REGISTER_HYST_LSB, regValue & 0xFF);
   setRegister(INT_LEVEL_REGISTER_HYST_MSB, regValue >> 8);
-  
 }
 
-void GridEYE::setInterruptHysteresisFahrenheit(float DegreesF){
+void GridEYE::setInterruptHysteresisFahrenheit(float DegreesF)
+{
 
   bool isNegative = false;
 
   float DegreesC = (DegreesF - 32) / 1.8;
 
-  if(DegreesC < 0){
+  if (DegreesC < 0)
+  {
     DegreesC = abs(DegreesC);
     isNegative = true;
   }
-  
-  int16_t temperature = 0;  
-  temperature = round(DegreesC*4);
 
-  if(isNegative){
+  int16_t temperature = 0;
+  temperature = round(DegreesC * 4);
+
+  if (isNegative)
+  {
     temperature = 0 - temperature;
     temperature |= (1 << 11);
   }
-  
+
   setRegister(INT_LEVEL_REGISTER_HYST_LSB, temperature & 0xFF);
   setRegister(INT_LEVEL_REGISTER_HYST_MSB, temperature >> 8);
-  
 }
 
 float GridEYE::getUpperInterruptValue()
@@ -724,9 +715,9 @@ float GridEYE::getUpperInterruptValue()
 
   // temperature is reported as 12-bit twos complement
   // check if temperature is negative
-  if(temperature & (1 << 11))
+  if (temperature & (1 << 11))
   {
-    // if temperature is negative, mask out the sign byte and 
+    // if temperature is negative, mask out the sign byte and
     // make the float negative
     temperature &= ~(1 << 11);
     temperature = temperature * -1;
@@ -735,14 +726,12 @@ float GridEYE::getUpperInterruptValue()
   float DegreesC = temperature * 0.25;
 
   return DegreesC;
-
 }
 
 int16_t GridEYE::getUpperInterruptValueRaw()
 {
 
   return getRegister(INT_LEVEL_REGISTER_UPPER_LSB, 2);
-
 }
 
 float GridEYE::getUpperInterruptValueFahrenheit()
@@ -752,9 +741,9 @@ float GridEYE::getUpperInterruptValueFahrenheit()
 
   // temperature is reported as 12-bit twos complement
   // check if temperature is negative
-  if(temperature & (1 << 11))
+  if (temperature & (1 << 11))
   {
-    // if temperature is negative, mask out the sign byte and 
+    // if temperature is negative, mask out the sign byte and
     // make the float negative
     temperature &= ~(1 << 11);
     temperature = temperature * -1;
@@ -763,7 +752,6 @@ float GridEYE::getUpperInterruptValueFahrenheit()
   float DegreesF = (temperature * 0.25) * 1.8 + 32;
 
   return DegreesF;
-
 }
 
 float GridEYE::getLowerInterruptValue()
@@ -773,9 +761,9 @@ float GridEYE::getLowerInterruptValue()
 
   // temperature is reported as 12-bit twos complement
   // check if temperature is negative
-  if(temperature & (1 << 11))
+  if (temperature & (1 << 11))
   {
-    // if temperature is negative, mask out the sign byte and 
+    // if temperature is negative, mask out the sign byte and
     // make the float negative
     temperature &= ~(1 << 11);
     temperature = temperature * -1;
@@ -784,7 +772,6 @@ float GridEYE::getLowerInterruptValue()
   float DegreesC = temperature * 0.25;
 
   return DegreesC;
-
 }
 
 float GridEYE::getLowerInterruptValueFahrenheit()
@@ -794,9 +781,9 @@ float GridEYE::getLowerInterruptValueFahrenheit()
 
   // temperature is reported as 12-bit twos complement
   // check if temperature is negative
-  if(temperature & (1 << 11))
+  if (temperature & (1 << 11))
   {
-    // if temperature is negative, mask out the sign byte and 
+    // if temperature is negative, mask out the sign byte and
     // make the float negative
     temperature &= ~(1 << 11);
     temperature = temperature * -1;
@@ -805,14 +792,12 @@ float GridEYE::getLowerInterruptValueFahrenheit()
   float DegreesF = (temperature * 0.25) * 1.8 + 32;
 
   return DegreesF;
-
 }
 
 int16_t GridEYE::getLowerInterruptValueRaw()
 {
 
   return getRegister(INT_LEVEL_REGISTER_LOWER_LSB, 2);
-
 }
 
 float GridEYE::getInterruptHysteresis()
@@ -822,9 +807,9 @@ float GridEYE::getInterruptHysteresis()
 
   // temperature is reported as 12-bit twos complement
   // check if temperature is negative
-  if(temperature & (1 << 11))
+  if (temperature & (1 << 11))
   {
-    // if temperature is negative, mask out the sign byte and 
+    // if temperature is negative, mask out the sign byte and
     // make the float negative
     temperature &= ~(1 << 11);
     temperature = temperature * -1;
@@ -833,19 +818,17 @@ float GridEYE::getInterruptHysteresis()
   float DegreesC = temperature * 0.25;
 
   return DegreesC;
-
 }
 
 float GridEYE::getInterruptHysteresisFahrenheit()
 {
-
   int16_t temperature = getRegister(INT_LEVEL_REGISTER_HYST_LSB, 2);
 
   // temperature is reported as 12-bit twos complement
   // check if temperature is negative
-  if(temperature & (1 << 11))
+  if (temperature & (1 << 11))
   {
-    // if temperature is negative, mask out the sign byte and 
+    // if temperature is negative, mask out the sign byte and
     // make the float negative
     temperature &= ~(1 << 11);
     temperature = temperature * -1;
@@ -854,14 +837,11 @@ float GridEYE::getInterruptHysteresisFahrenheit()
   float DegreesF = (temperature * 0.25) * 1.8 + 32;
 
   return DegreesF;
-
 }
 
 int16_t GridEYE::getInterruptHysteresisRaw()
 {
-
   return getRegister(INT_LEVEL_REGISTER_HYST_LSB, 2);
-
 }
 
 /********************************************************
@@ -876,36 +856,33 @@ int16_t GridEYE::getInterruptHysteresisRaw()
 
 void GridEYE::setRegister(unsigned char reg, unsigned char val)
 {
-
-    _i2cPort->beginTransmission(_deviceAddress);
-    _i2cPort->write(reg);
-    _i2cPort->write(val);
-    _i2cPort->endTransmission();
-    
+  _i2cPort->beginTransmission(_deviceAddress);
+  _i2cPort->write(reg);
+  _i2cPort->write(val);
+  _i2cPort->endTransmission();
 }
 
 int16_t GridEYE::getRegister(unsigned char reg, int8_t len)
 {
-
   int16_t result;
 
-    _i2cPort->beginTransmission(_deviceAddress);
-    _i2cPort->write(reg);
-    _i2cPort->endTransmission(false);
-    _i2cPort->requestFrom((uint8_t)_deviceAddress, (uint8_t)len);
+  _i2cPort->beginTransmission(_deviceAddress);
+  _i2cPort->write(reg);
+  _i2cPort->endTransmission(false);
+  _i2cPort->requestFrom((uint8_t)_deviceAddress, (uint8_t)len);
 
-    while(_i2cPort->available())    // client may send less than requested
-    {
-      // Get bytes from sensor
-      uint8_t lsb = _i2cPort->read(); 
-      uint8_t msb = _i2cPort->read(); 
-  
-      // concat bytes into int
-      result = (uint16_t)msb << 8 | lsb;
-    }
+  while (_i2cPort->available()) // client may send less than requested
+  {
+    // Get bytes from sensor
+    uint8_t lsb = _i2cPort->read();
 
-    _i2cPort->endTransmission();
+    uint8_t msb = _i2cPort->read();
 
-    return result;
-                         
+    // concat bytes into int
+    result = (uint16_t)msb << 8 | lsb;
+  }
+
+  _i2cPort->endTransmission();
+
+  return result;
 }
