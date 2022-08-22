@@ -43,6 +43,17 @@ void GridEYE::setI2CAddress(uint8_t addr)
   _deviceAddress = addr;
 }
 
+int16_t extend12to16(int16_t temperature) {
+  // temperature is reported as 12-bit twos complement
+  // extend sign bit to 16-bit twos complement
+  temperature &= 0x0fff;
+  temperature |= (temperature & (1 << 11))<<1;
+  temperature |= (temperature & (1 << 11))<<2;
+  temperature |= (temperature & (1 << 11))<<3;
+  temperature |= (temperature & (1 << 11))<<4;
+  return temperature;
+}
+
 /********************************************************
  * Functions for retreiving the temperature of
  * a single pixel. 
@@ -65,15 +76,7 @@ float GridEYE::getPixelTemperature(unsigned char pixelAddr)
   unsigned char pixelLowRegister = TEMPERATURE_REGISTER_START + (2 * pixelAddr);
   int16_t temperature = getRegister(pixelLowRegister, 2);
 
-  // temperature is reported as 12-bit twos complement
-  // check if temperature is negative
-  if(temperature & (1 << 11))
-  {
-    // if temperature is negative, mask out the sign byte and 
-    // make the float negative
-    temperature &= ~(1 << 11);
-    temperature = temperature * -1;
-  }
+  temperature = extend12to16(temperature);
 
   float DegreesC = temperature * 0.25;
 
@@ -89,15 +92,7 @@ float GridEYE::getPixelTemperatureFahrenheit(unsigned char pixelAddr)
   unsigned char pixelLowRegister = TEMPERATURE_REGISTER_START + (2 * pixelAddr);
   int16_t temperature = getRegister(pixelLowRegister, 2);
 
-  // temperature is reported as 12-bit twos complement
-  // check if temperature is negative
-  if(temperature & (1 << 11))
-  {
-    // if temperature is negative, mask out the sign byte and 
-    // make the float negative
-    temperature &= ~(1 << 11);
-    temperature = temperature * -1;
-  }
+  temperature = extend12to16(temperature);
 
   float DegreesF = (temperature * 0.25) * 1.8 + 32;
 
@@ -136,15 +131,7 @@ float GridEYE::getDeviceTemperature()
 
   int16_t temperature = getRegister(THERMISTOR_REGISTER_LSB, 2);
 
-    // temperature is reported as 12-bit twos complement
-    // check if temperature is negative
-  if(temperature & (1 << 11))
-  {
-    // if temperature is negative, mask out the sign byte and 
-    // make the float negative
-    temperature &= ~(1 << 11);
-    temperature = temperature * -1;
-  }
+  temperature = extend12to16(temperature);
 
   float realTemperature = temperature * 0.0625;
 
@@ -157,15 +144,7 @@ float GridEYE::getDeviceTemperatureFahrenheit()
 
   int16_t temperature = getRegister(THERMISTOR_REGISTER_LSB, 2);
 
-    // temperature is reported as 12-bit twos complement
-    // check if temperature is negative
-  if(temperature & (1 << 11))
-  {
-    // if temperature is negative, mask out the sign byte and 
-    // make the float negative
-    temperature &= ~(1 << 11);
-    temperature = temperature * -1;
-  }
+  temperature = extend12to16(temperature);
 
   float realTemperatureF = (temperature * 0.0625) * 1.8 + 32;
 
@@ -722,15 +701,7 @@ float GridEYE::getUpperInterruptValue()
 
   int16_t temperature = getRegister(INT_LEVEL_REGISTER_UPPER_LSB, 2);
 
-  // temperature is reported as 12-bit twos complement
-  // check if temperature is negative
-  if(temperature & (1 << 11))
-  {
-    // if temperature is negative, mask out the sign byte and 
-    // make the float negative
-    temperature &= ~(1 << 11);
-    temperature = temperature * -1;
-  }
+  temperature = extend12to16(temperature);
 
   float DegreesC = temperature * 0.25;
 
@@ -750,15 +721,7 @@ float GridEYE::getUpperInterruptValueFahrenheit()
 
   int16_t temperature = getRegister(INT_LEVEL_REGISTER_UPPER_LSB, 2);
 
-  // temperature is reported as 12-bit twos complement
-  // check if temperature is negative
-  if(temperature & (1 << 11))
-  {
-    // if temperature is negative, mask out the sign byte and 
-    // make the float negative
-    temperature &= ~(1 << 11);
-    temperature = temperature * -1;
-  }
+  temperature = extend12to16(temperature);
 
   float DegreesF = (temperature * 0.25) * 1.8 + 32;
 
@@ -771,15 +734,7 @@ float GridEYE::getLowerInterruptValue()
 
   int16_t temperature = getRegister(INT_LEVEL_REGISTER_LOWER_LSB, 2);
 
-  // temperature is reported as 12-bit twos complement
-  // check if temperature is negative
-  if(temperature & (1 << 11))
-  {
-    // if temperature is negative, mask out the sign byte and 
-    // make the float negative
-    temperature &= ~(1 << 11);
-    temperature = temperature * -1;
-  }
+  temperature = extend12to16(temperature);
 
   float DegreesC = temperature * 0.25;
 
@@ -792,15 +747,7 @@ float GridEYE::getLowerInterruptValueFahrenheit()
 
   int16_t temperature = getRegister(INT_LEVEL_REGISTER_LOWER_LSB, 2);
 
-  // temperature is reported as 12-bit twos complement
-  // check if temperature is negative
-  if(temperature & (1 << 11))
-  {
-    // if temperature is negative, mask out the sign byte and 
-    // make the float negative
-    temperature &= ~(1 << 11);
-    temperature = temperature * -1;
-  }
+  temperature = extend12to16(temperature);
 
   float DegreesF = (temperature * 0.25) * 1.8 + 32;
 
@@ -820,15 +767,7 @@ float GridEYE::getInterruptHysteresis()
 
   int16_t temperature = getRegister(INT_LEVEL_REGISTER_HYST_LSB, 2);
 
-  // temperature is reported as 12-bit twos complement
-  // check if temperature is negative
-  if(temperature & (1 << 11))
-  {
-    // if temperature is negative, mask out the sign byte and 
-    // make the float negative
-    temperature &= ~(1 << 11);
-    temperature = temperature * -1;
-  }
+  temperature = extend12to16(temperature);
 
   float DegreesC = temperature * 0.25;
 
@@ -841,15 +780,7 @@ float GridEYE::getInterruptHysteresisFahrenheit()
 
   int16_t temperature = getRegister(INT_LEVEL_REGISTER_HYST_LSB, 2);
 
-  // temperature is reported as 12-bit twos complement
-  // check if temperature is negative
-  if(temperature & (1 << 11))
-  {
-    // if temperature is negative, mask out the sign byte and 
-    // make the float negative
-    temperature &= ~(1 << 11);
-    temperature = temperature * -1;
-  }
+  temperature = extend12to16(temperature);
 
   float DegreesF = (temperature * 0.25) * 1.8 + 32;
 
