@@ -636,7 +636,7 @@ float GridEYE::getUpperInterruptValueFahrenheit()
   if (!getRegister16(INT_LEVEL_REGISTER_UPPER_LSB, &temperature))
     return -99.0; // Indicate a read error
 
-  return (((convertSigned12ToFloat(temperature)) * 0.25 * 1.8) + 32); // Convert to Degrees F. LSB resolution is 0.25C.
+  return (((convertSigned12ToFloat(temperature)) * 0.25 * 1.8) + 32); // Convert to Degrees F
 }
 
 int16_t GridEYE::getUpperInterruptValueRaw()
@@ -646,7 +646,7 @@ int16_t GridEYE::getUpperInterruptValueRaw()
   return convertUnsignedSigned16(val);
 }
 
-int16_t GridEYE::getUpperInterruptValueRaw()
+int16_t GridEYE::getUpperInterruptValueSigned()
 {
   uint16_t temperature = 0;
   if (!getRegister16(INT_LEVEL_REGISTER_UPPER_LSB, &temperature))
@@ -679,7 +679,7 @@ float GridEYE::getLowerInterruptValueFahrenheit()
   if (!getRegister16(INT_LEVEL_REGISTER_LOWER_LSB, &temperature))
     return -99.0; // Indicate a read error
 
-  return (((convertSigned12ToFloat(temperature)) * 0.25 * 1.8) + 32); // Convert to Degrees F. LSB resolution is 0.25C.
+  return (((convertSigned12ToFloat(temperature)) * 0.25 * 1.8) + 32); // Convert to Degrees F
 }
 
 int16_t GridEYE::getLowerInterruptValueRaw()
@@ -722,7 +722,7 @@ float GridEYE::getInterruptHysteresisFahrenheit()
   if (!getRegister16(INT_LEVEL_REGISTER_HYST_LSB, &temperature))
     return -99.0; // Indicate a read error
 
-  return (((convertSigned12ToFloat(temperature)) * 0.25 * 1.8) + 32); // Convert to Degrees F. LSB resolution is 0.25C.
+  return (((convertSigned12ToFloat(temperature)) * 0.25 * 1.8) + 32); // Convert to Degrees F
 }
 
 int16_t GridEYE::getInterruptHysteresisRaw()
