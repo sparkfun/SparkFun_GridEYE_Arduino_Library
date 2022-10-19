@@ -887,7 +887,7 @@ void GridEYE::setRegister(unsigned char reg, unsigned char val)
 int16_t GridEYE::getRegister(unsigned char reg, int8_t len)
 {
 
-  int16_t result;
+  int16_t result = 0;
 
     _i2cPort->beginTransmission(_deviceAddress);
     _i2cPort->write(reg);
