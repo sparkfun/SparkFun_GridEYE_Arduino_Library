@@ -581,12 +581,12 @@ void GridEYE::setUpperInterruptValue(float DegreesC)
 
   if (isNegative)
   {
-    temperature = 0 - temperature;
-    temperature |= (1 << 11);
+    temperature = 0 - temperature; // temperature is int16_t so this will set the MS bits automatically
+    temperature |= (1 << 11); // Redundant, but retained for clarity
   }
 
   setRegister(INT_LEVEL_REGISTER_UPPER_LSB, temperature & 0xFF);
-  setRegister(INT_LEVEL_REGISTER_UPPER_MSB, temperature >> 8);
+  setRegister(INT_LEVEL_REGISTER_UPPER_MSB, (temperature >> 8) & 0x0F); // Only write 4 bits
 }
 
 void GridEYE::setUpperInterruptValueRaw(int16_t regValue)
@@ -614,12 +614,12 @@ void GridEYE::setUpperInterruptValueFahrenheit(float DegreesF)
 
   if (isNegative)
   {
-    temperature = 0 - temperature;
-    temperature |= (1 << 11);
+    temperature = 0 - temperature; // temperature is int16_t so this will set the MS bits automatically
+    temperature |= (1 << 11); // Redundant, but retained for clarity
   }
 
   setRegister(INT_LEVEL_REGISTER_UPPER_LSB, temperature & 0xFF);
-  setRegister(INT_LEVEL_REGISTER_UPPER_MSB, temperature >> 8);
+  setRegister(INT_LEVEL_REGISTER_UPPER_MSB, (temperature >> 8) & 0x0F); // Only write 4 bits
 }
 
 void GridEYE::setLowerInterruptValue(float DegreesC)
@@ -638,12 +638,12 @@ void GridEYE::setLowerInterruptValue(float DegreesC)
 
   if (isNegative)
   {
-    temperature = 0 - temperature;
-    temperature |= (1 << 11);
+    temperature = 0 - temperature; // temperature is int16_t so this will set the MS bits automatically
+    temperature |= (1 << 11); // Redundant, but retained for clarity
   }
 
   setRegister(INT_LEVEL_REGISTER_LOWER_LSB, temperature & 0xFF);
-  setRegister(INT_LEVEL_REGISTER_LOWER_MSB, temperature >> 8);
+  setRegister(INT_LEVEL_REGISTER_LOWER_MSB, (temperature >> 8) & 0x0F); // Only write 4 bits
 }
 
 void GridEYE::setLowerInterruptValueRaw(int16_t regValue)
@@ -671,12 +671,12 @@ void GridEYE::setLowerInterruptValueFahrenheit(float DegreesF)
 
   if (isNegative)
   {
-    temperature = 0 - temperature;
-    temperature |= (1 << 11);
+    temperature = 0 - temperature; // temperature is int16_t so this will set the MS bits automatically
+    temperature |= (1 << 11); // Redundant, but retained for clarity
   }
 
   setRegister(INT_LEVEL_REGISTER_LOWER_LSB, temperature & 0xFF);
-  setRegister(INT_LEVEL_REGISTER_LOWER_MSB, temperature >> 8);
+  setRegister(INT_LEVEL_REGISTER_LOWER_MSB, (temperature >> 8) & 0x0F); // Only write 4 bits
 }
 
 void GridEYE::setInterruptHysteresis(float DegreesC)
@@ -695,12 +695,12 @@ void GridEYE::setInterruptHysteresis(float DegreesC)
 
   if (isNegative)
   {
-    temperature = 0 - temperature;
-    temperature |= (1 << 11);
+    temperature = 0 - temperature; // temperature is int16_t so this will set the MS bits automatically
+    temperature |= (1 << 11); // Redundant, but retained for clarity
   }
 
   setRegister(INT_LEVEL_REGISTER_HYST_LSB, temperature & 0xFF);
-  setRegister(INT_LEVEL_REGISTER_HYST_MSB, temperature >> 8);
+  setRegister(INT_LEVEL_REGISTER_HYST_MSB, (temperature >> 8) & 0x0F); // Only write 4 bits
 }
 
 void GridEYE::setInterruptHysteresisRaw(int16_t regValue)
@@ -728,38 +728,29 @@ void GridEYE::setInterruptHysteresisFahrenheit(float DegreesF)
 
   if (isNegative)
   {
-    temperature = 0 - temperature;
-    temperature |= (1 << 11);
+    temperature = 0 - temperature; // temperature is int16_t so this will set the MS bits automatically
+    temperature |= (1 << 11); // Redundant, but retained for clarity
   }
 
   setRegister(INT_LEVEL_REGISTER_HYST_LSB, temperature & 0xFF);
-  setRegister(INT_LEVEL_REGISTER_HYST_MSB, temperature >> 8);
+  setRegister(INT_LEVEL_REGISTER_HYST_MSB, (temperature >> 8) & 0x0F); // Only write 4 bits
 }
 
 float GridEYE::getUpperInterruptValue()
 {
+  uint16_t temperature = 0;
+  
+  if (!getRegister16(INT_LEVEL_REGISTER_UPPER_LSB, &temperature))
+    return -99.0; // Indicate a read error
 
-  int16_t temperature = getRegister(INT_LEVEL_REGISTER_UPPER_LSB, 2);
-
-  // temperature is reported as 12-bit twos complement
-  // check if temperature is negative
-  if (temperature & (1 << 11))
-  {
-    // if temperature is negative, mask out the sign byte and
-    // make the float negative
-    temperature &= ~(1 << 11);
-    temperature = temperature * -1;
-  }
-
-  float DegreesC = temperature * 0.25;
-
-  return DegreesC;
+  return (convertSigned12ToFloat(temperature) * 0.25); // Convert to Degrees C. LSB resolution is 0.25C.
 }
 
 int16_t GridEYE::getUpperInterruptValueRaw()
 {
-
-  return getRegister(INT_LEVEL_REGISTER_UPPER_LSB, 2);
+  uint16_t val = 0;
+  getRegister16(INT_LEVEL_REGISTER_UPPER_LSB, &val);
+  return convertUnsignedSigned16(val);
 }
 
 float GridEYE::getUpperInterruptValueFahrenheit()
