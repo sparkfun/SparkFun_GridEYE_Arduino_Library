@@ -72,6 +72,11 @@ void draw() {
   if(myPort.available() > 64){
   myString = myPort.readStringUntil(13);
   
+  // readStringUntil is a non-blocking function and will return null if it can't find the linefeed
+  if(myString == null){
+    return;
+  }
+  
   // generate an array of strings that contains each of the comma
   // separated values
   String splitString[] = splitTokens(myString, ",");
