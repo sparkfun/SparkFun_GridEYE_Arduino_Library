@@ -150,15 +150,18 @@ public:
   void setInterruptHysteresisFahrenheit(float DegreesF);
 
   float getUpperInterruptValue();
-  int16_t getUpperInterruptValueRaw();
+  int16_t getUpperInterruptValueRaw(); // The return value is somewhat ambiguous. Use getUpperInterruptValueSigned for a better experience...
+  int16_t getUpperInterruptValueSigned();
   float getUpperInterruptValueFahrenheit();
 
   float getLowerInterruptValue();
-  int16_t getLowerInterruptValueRaw();
+  int16_t getLowerInterruptValueRaw(); // The return value is somewhat ambiguous. Use getLowerInterruptValueSigned for a better experience...
+  int16_t getLowerInterruptValueSigned();
   float getLowerInterruptValueFahrenheit();
 
   float getInterruptHysteresis();
-  int16_t getInterruptHysteresisRaw();
+  int16_t getInterruptHysteresisRaw(); // The return value is somewhat ambiguous. Use getInterruptHysteresisSigned for a better experience...
+  int16_t getInterruptHysteresisSigned();
   float getInterruptHysteresisFahrenheit();
 
   bool setRegister(unsigned char reg, unsigned char val);

@@ -629,13 +629,6 @@ float GridEYE::getUpperInterruptValue()
   return ((convertSigned12ToFloat(temperature)) * 0.25); // Convert to Degrees C. LSB resolution is 0.25C.
 }
 
-int16_t GridEYE::getUpperInterruptValueRaw()
-{
-  uint16_t val = 0;
-  getRegister16(INT_LEVEL_REGISTER_UPPER_LSB, &val);
-  return convertUnsignedSigned16(val);
-}
-
 float GridEYE::getUpperInterruptValueFahrenheit()
 {
   uint16_t temperature = 0;
@@ -644,6 +637,29 @@ float GridEYE::getUpperInterruptValueFahrenheit()
     return -99.0; // Indicate a read error
 
   return (((convertSigned12ToFloat(temperature)) * 0.25 * 1.8) + 32); // Convert to Degrees F. LSB resolution is 0.25C.
+}
+
+int16_t GridEYE::getUpperInterruptValueRaw()
+{
+  uint16_t val = 0;
+  getRegister16(INT_LEVEL_REGISTER_UPPER_LSB, &val);
+  return convertUnsignedSigned16(val);
+}
+
+int16_t GridEYE::getUpperInterruptValueRaw()
+{
+  uint16_t temperature = 0;
+  if (!getRegister16(INT_LEVEL_REGISTER_UPPER_LSB, &temperature))
+    return -99; // Indicate a read error
+
+  // temperature is 12-bit twos complement
+  // check if temperature is negative
+  if (temperature & (1 << 11))
+    temperature |= 0xF000; // Set the other MS bits to 1 to preserve the two's complement
+  else
+    temperature &= 0x07FF; // Clear the unused bits - just in case
+
+  return convertUnsignedSigned16(temperature); // Convert to int16_t without ambiguity
 }
 
 float GridEYE::getLowerInterruptValue()
@@ -673,6 +689,22 @@ int16_t GridEYE::getLowerInterruptValueRaw()
   return convertUnsignedSigned16(val);
 }
 
+int16_t GridEYE::getLowerInterruptValueSigned()
+{
+  uint16_t temperature = 0;
+  if (!getRegister16(INT_LEVEL_REGISTER_LOWER_LSB, &temperature))
+    return -99; // Indicate a read error
+
+  // temperature is 12-bit twos complement
+  // check if temperature is negative
+  if (temperature & (1 << 11))
+    temperature |= 0xF000; // Set the other MS bits to 1 to preserve the two's complement
+  else
+    temperature &= 0x07FF; // Clear the unused bits - just in case
+
+  return convertUnsignedSigned16(temperature); // Convert to int16_t without ambiguity
+}
+
 float GridEYE::getInterruptHysteresis()
 {
   uint16_t temperature = 0;
@@ -700,11 +732,31 @@ int16_t GridEYE::getInterruptHysteresisRaw()
   return convertUnsignedSigned16(val);
 }
 
+int16_t GridEYE::getInterruptHysteresisSigned()
+{
+  uint16_t temperature = 0;
+  if (!getRegister16(INT_LEVEL_REGISTER_HYST_LSB, &temperature))
+    return -99; // Indicate a read error
+
+  // temperature is 12-bit twos complement
+  // check if temperature is negative
+  if (temperature & (1 << 11))
+    temperature |= 0xF000; // Set the other MS bits to 1 to preserve the two's complement
+  else
+    temperature &= 0x07FF; // Clear the unused bits - just in case
+
+  return convertUnsignedSigned16(temperature); // Convert to int16_t without ambiguity
+}
+
 /********************************************************
  * Functions for setting and getting registers over I2C
  ********************************************************
  *
  * setRegister() - set unsigned char value at unsigned char register
+ *
+ * getRegister8() - get unsigned char value from unsigned char register
+ *
+ * getRegister16() - get uint16_t value from unsigned char register
  *
  * getRegister() - get up to INT16 value from unsigned char register
  *
