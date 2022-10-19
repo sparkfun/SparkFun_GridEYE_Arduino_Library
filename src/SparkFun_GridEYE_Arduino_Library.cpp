@@ -891,13 +891,13 @@ int16_t GridEYE::getInterruptHysteresisRaw()
  *
  ********************************************************/
 
-void GridEYE::setRegister(unsigned char reg, unsigned char val)
+bool GridEYE::setRegister(unsigned char reg, unsigned char val)
 {
 
   _i2cPort->beginTransmission(_deviceAddress);
   _i2cPort->write(reg);
   _i2cPort->write(val);
-  _i2cPort->endTransmission();
+  return (_i2cPort->endTransmission() == 0);
 }
 
 bool GridEYE::getRegister8(unsigned char reg, uint8_t *val)

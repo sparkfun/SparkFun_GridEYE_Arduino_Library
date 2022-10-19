@@ -158,7 +158,7 @@ public:
   int16_t getInterruptHysteresisRaw();
   float getInterruptHysteresisFahrenheit();
 
-  void setRegister(unsigned char reg, unsigned char val);
+  bool setRegister(unsigned char reg, unsigned char val);
   bool getRegister8(unsigned char reg, uint8_t *val);
   bool getRegister16(unsigned char reg, uint16_t *val); // Note: this returns an unsigned val. Use convertUnsignedSigned to convert to int16_t
   int16_t convertUnsignedSigned16(uint16_t val);
