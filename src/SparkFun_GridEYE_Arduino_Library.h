@@ -166,7 +166,9 @@ public:
   bool getRegister8(unsigned char reg, uint8_t *val);
   bool getRegister16(unsigned char reg, uint16_t *val); // Note: this returns an unsigned val. Use convertUnsignedSigned to convert to int16_t
   int16_t convertUnsignedSigned16(uint16_t val);
+  uint16_t convertSignedUnsigned16(int16_t val);
   float convertSigned12ToFloat(uint16_t val);
+  uint16_t convertFloatToSigned12(float val);
 
   void setI2CAddress(uint8_t addr); // Set the I2C address we read and write to
 
