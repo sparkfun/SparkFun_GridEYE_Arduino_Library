@@ -16,15 +16,18 @@ begin	KEYWORD2
 
 getPixelTemperature	KEYWORD2
 getPixelTemperatureRaw	KEYWORD2
+getPixelTemperatureSigned	KEYWORD2
 getPixelTemperatureFahrenheit	KEYWORD2
 
 getDeviceTemperature	KEYWORD2
 getDeviceTemperatureRaw	KEYWORD2
+getDeviceTemperatureSigned	KEYWORD2
 getDeviceTemperatureFahrenheit	KEYWORD2
 
 setFramerate1FPS	KEYWORD2
 setFramerate10FPS	KEYWORD2
 isFramerate10FPS	KEYWORD2
+getFramerate	KEYWORD2
 
 wake	KEYWORD2
 sleep	KEYWORD2
@@ -66,18 +69,28 @@ setInterruptHysteresisFahrenheit	KEYWORD2
 
 getUpperInterruptValue	KEYWORD2
 getUpperInterruptValueRaw	KEYWORD2
+getUpperInterruptValueSigned	KEYWORD2
 getUpperInterruptValueFahrenheit	KEYWORD2
 
 getLowerInterruptValue	KEYWORD2
 getLowerInterruptValueRaw	KEYWORD2
+getLowerInterruptValueSigned	KEYWORD2
 getLowerInterruptValueFahrenheit	KEYWORD2
 
 getInterruptHysteresis	KEYWORD2
 getInterruptHysteresisRaw	KEYWORD2
+getInterruptHysteresisSigned	KEYWORD2
 getInterruptHysteresisFahrenheit	KEYWORD2
 
 setRegister	KEYWORD2
 getRegister	KEYWORD2
+getRegister8	KEYWORD2
+getRegister16	KEYWORD2
+
+convertUnsignedSigned16	KEYWORD2
+convertSignedUnsigned16	KEYWORD2
+convertSigned12ToFloat	KEYWORD2
+convertFloatToSigned12	KEYWORD2
 
 setI2CAddress	KEYWORD2
 

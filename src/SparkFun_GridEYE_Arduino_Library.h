@@ -150,23 +150,28 @@ public:
   void setInterruptHysteresisFahrenheit(float DegreesF);
 
   float getUpperInterruptValue();
-  int16_t getUpperInterruptValueRaw();
+  int16_t getUpperInterruptValueRaw(); // The return value is somewhat ambiguous. Use getUpperInterruptValueSigned for a better experience...
+  int16_t getUpperInterruptValueSigned();
   float getUpperInterruptValueFahrenheit();
 
   float getLowerInterruptValue();
-  int16_t getLowerInterruptValueRaw();
+  int16_t getLowerInterruptValueRaw(); // The return value is somewhat ambiguous. Use getLowerInterruptValueSigned for a better experience...
+  int16_t getLowerInterruptValueSigned();
   float getLowerInterruptValueFahrenheit();
 
   float getInterruptHysteresis();
-  int16_t getInterruptHysteresisRaw();
+  int16_t getInterruptHysteresisRaw(); // The return value is somewhat ambiguous. Use getInterruptHysteresisSigned for a better experience...
+  int16_t getInterruptHysteresisSigned();
   float getInterruptHysteresisFahrenheit();
 
   bool setRegister(unsigned char reg, unsigned char val);
-  int16_t getRegister(unsigned char reg, int8_t dummy); // Provided for backward compatibility only. Not recommended...
+  int16_t getRegister(unsigned char reg, int8_t len); // Provided for backward compatibility only. Not recommended...
   bool getRegister8(unsigned char reg, uint8_t *val);
   bool getRegister16(unsigned char reg, uint16_t *val); // Note: this returns an unsigned val. Use convertUnsignedSigned to convert to int16_t
   int16_t convertUnsignedSigned16(uint16_t val);
+  uint16_t convertSignedUnsigned16(int16_t val);
   float convertSigned12ToFloat(uint16_t val);
+  uint16_t convertFloatToSigned12(float val);
 
   void setI2CAddress(uint8_t addr); // Set the I2C address we read and write to
 
