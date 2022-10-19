@@ -884,28 +884,73 @@ void GridEYE::setRegister(unsigned char reg, unsigned char val)
     
 }
 
-int16_t GridEYE::getRegister(unsigned char reg, int8_t len)
+bool GridEYE::getRegister8(unsigned char reg, uint8_t *val)
 {
 
-  int16_t result = 0;
+  _i2cPort->beginTransmission(_deviceAddress);
+  _i2cPort->write(reg);
+  if (_i2cPort->endTransmission(false) != 0) // 'false' for a repeated start
+    return false;
 
-    _i2cPort->beginTransmission(_deviceAddress);
-    _i2cPort->write(reg);
-    _i2cPort->endTransmission(false);
-    _i2cPort->requestFrom((uint8_t)_deviceAddress, (uint8_t)len);
+  bool result = _i2cPort->requestFrom(_deviceAddress, (uint8_t)1) == 1; // Request 1 byte
 
-    while(_i2cPort->available())    // client may send less than requested
-    {
-      // Get bytes from sensor
-      uint8_t lsb = _i2cPort->read(); 
-      uint8_t msb = _i2cPort->read(); 
-  
-      // concat bytes into int
-      result = (uint16_t)msb << 8 | lsb;
-    }
+  if (result)
+    *val = _i2cPort->read();
 
-    _i2cPort->endTransmission();
+  return result;
 
-    return result;
-                         
+}
+
+bool GridEYE::getRegister16(unsigned char reg, uint16_t *val)
+{
+
+  _i2cPort->beginTransmission(_deviceAddress);
+  _i2cPort->write(reg);
+  if (_i2cPort->endTransmission(false) != 0) // 'false' for a repeated start
+    return false;
+
+  bool result = _i2cPort->requestFrom(_deviceAddress, (uint8_t)2) == 2; // Request 2 bytes
+
+  if (result)
+  {
+    // Get bytes from sensor. Little endian (LSB first)
+    uint8_t lsb = _i2cPort->read(); 
+    uint8_t msb = _i2cPort->read(); 
+
+    // concat bytes into uint16_t
+    *val = (((uint16_t)msb) << 8) | lsb;
+  }
+
+  return result;
+
+}
+
+// Provided for backward compatibility only. Not recommended...
+int16_t GridEYE::getRegister(unsigned char reg, int8_t dummy)
+{
+
+  (void)dummy; // Avoid compiler unused variable warning
+
+  uint16_t result = 0;
+
+  getRegister16(reg, &result);
+
+  return convertUnsignedSigned16(result);
+
+}
+
+// Avoid any ambiguity when casting uint16_t to int16_t
+int16_t GridEYE::convertUnsignedSigned16(uint16_t val)
+{
+
+  union
+  {
+    int16_t signed16;
+    uint16_t unsigned16;
+  } signedUnsigned16;
+
+  signedUnsigned16.unsigned16 = val;
+
+  return signedUnsigned16.signed16;
+
 }
