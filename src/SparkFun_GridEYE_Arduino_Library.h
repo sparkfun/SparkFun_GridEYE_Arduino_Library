@@ -97,16 +97,19 @@ public:
   void begin(uint8_t deviceAddress = DEFAULT_ADDRESS, TwoWire &wirePort = Wire);
 
   float getPixelTemperature(unsigned char pixelAddr);
-  int16_t getPixelTemperatureRaw(unsigned char pixelAddr);
+  int16_t getPixelTemperatureRaw(unsigned char pixelAddr); // The return value is somewhat ambiguous. Use getPixelTemperatureSigned for a better experience...
+  int16_t getPixelTemperatureSigned(unsigned char pixelAddr);
   float getPixelTemperatureFahrenheit(unsigned char pixelAddr);
 
   float getDeviceTemperature();
-  int16_t getDeviceTemperatureRaw();
+  int16_t getDeviceTemperatureRaw(); // The return value is somewhat ambiguous. Use getDeviceTemperatureSigned for a better experience...
+  int16_t getDeviceTemperatureSigned();
   float getDeviceTemperatureFahrenheit();
 
   void setFramerate1FPS();
   void setFramerate10FPS();
   bool isFramerate10FPS();
+  bool getFramerate(bool *is10FPS);
 
   void wake();
   void sleep();
@@ -159,10 +162,11 @@ public:
   float getInterruptHysteresisFahrenheit();
 
   bool setRegister(unsigned char reg, unsigned char val);
+  int16_t getRegister(unsigned char reg, int8_t dummy); // Provided for backward compatibility only. Not recommended...
   bool getRegister8(unsigned char reg, uint8_t *val);
   bool getRegister16(unsigned char reg, uint16_t *val); // Note: this returns an unsigned val. Use convertUnsignedSigned to convert to int16_t
   int16_t convertUnsignedSigned16(uint16_t val);
-  int16_t getRegister(unsigned char reg, int8_t dummy); // Provided for backward compatibility only. Not recommended...
+  float convertSigned12ToFloat(uint16_t val);
 
   void setI2CAddress(uint8_t addr); // Set the I2C address we read and write to
 
