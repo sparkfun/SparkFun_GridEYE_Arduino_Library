@@ -830,7 +830,6 @@ int16_t GridEYE::getRegister(unsigned char reg, int8_t len)
 // Avoid any ambiguity when casting uint16_t to int16_t
 int16_t GridEYE::convertUnsignedSigned16(uint16_t val)
 {
-
   union
   {
     int16_t signed16;
@@ -845,7 +844,6 @@ int16_t GridEYE::convertUnsignedSigned16(uint16_t val)
 // Avoid any ambiguity when casting int16_t to uint16_t
 uint16_t GridEYE::convertSignedUnsigned16(int16_t val)
 {
-
   union
   {
     int16_t signed16;
