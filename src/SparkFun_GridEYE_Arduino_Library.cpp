@@ -933,16 +933,20 @@ bool GridEYE::getRegister16(unsigned char reg, uint16_t *val)
 }
 
 // Provided for backward compatibility only. Not recommended...
-int16_t GridEYE::getRegister(unsigned char reg, int8_t dummy)
+int16_t GridEYE::getRegister(unsigned char reg, int8_t len)
 {
-
-  (void)dummy; // Avoid compiler unused variable warning
-
-  uint16_t result = 0;
-
-  getRegister16(reg, &result);
-
-  return convertUnsignedSigned16(result);
+  if (len == 2)
+  {
+    uint16_t result = 0;
+    getRegister16(reg, &result);
+    return convertUnsignedSigned16(result);
+  }
+  else
+  {
+    uint8_t result = 0;
+    getRegister8(reg, &result);
+    return convertUnsignedSigned16((uint16_t)result);
+  }
 }
 
 // Avoid any ambiguity when casting uint16_t to int16_t

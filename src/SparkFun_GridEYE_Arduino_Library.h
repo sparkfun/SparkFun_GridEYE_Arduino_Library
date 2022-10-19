@@ -162,7 +162,7 @@ public:
   float getInterruptHysteresisFahrenheit();
 
   bool setRegister(unsigned char reg, unsigned char val);
-  int16_t getRegister(unsigned char reg, int8_t dummy); // Provided for backward compatibility only. Not recommended...
+  int16_t getRegister(unsigned char reg, int8_t len); // Provided for backward compatibility only. Not recommended...
   bool getRegister8(unsigned char reg, uint8_t *val);
   bool getRegister16(unsigned char reg, uint16_t *val); // Note: this returns an unsigned val. Use convertUnsignedSigned to convert to int16_t
   int16_t convertUnsignedSigned16(uint16_t val);
